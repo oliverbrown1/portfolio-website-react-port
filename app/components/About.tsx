@@ -28,14 +28,16 @@ const About = ({ aboutMePressed, toggleAboutMe }: AboutProps) => {
               aboutMePressed ? "max-h-[240px] opacity-100" : "max-h-0 opacity-0"
             }`}
           >
-            <div className="p-6 text-base text-base-content/80">
+            <div className="p-6 text-xl text-base-content/80">
+                <p className="text-xs uppercase tracking-[0.4em] text-secondary py-3">
+                    About
+                </p>
               <p className="mb-2">
-                I’m an AI engineer who pairs research-backed practices with
-                hands-on product design to ship thoughtful experiences.
-              </p>
-              <p>
-                My toolkit includes TypeScript, Next.js, Tailwind, and daisyUI
-                components, constantly refined by experimentation and feedback.
+                I am a Generative AI Engineer passionate about how we can leverage LLMs to automate processes and enhance the user experience, as well as looking at what can be achieved with agentic AI systems today. 
+
+                As a recent Computer Science graduate from the University of Warwick, I am also passionate about other areas of tech, including ML and full-stack development, which I explore through <a target="_blank" className="link text-secondary" href="https://github.com/oliverbrown1">personal projects</a>.
+
+                In my freetime I stil like to practice on the piano and play different games on my PC.
               </p>
             </div>
           </div>

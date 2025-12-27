@@ -16,16 +16,17 @@ const Portfolio = () => {
           <p className="text-xs uppercase tracking-[0.4em] text-secondary">
             Portfolio
           </p>
-          <h2 className="text-3xl font-semibold text-primary-content">
-            Rough UX mockups & structural hints
-          </h2>
         </div>
       </div>
 
       <div className="flex flex-col gap-6 lg:grid-cols-[1.2fr,0.8fr]">
-        <div className="flex flex-row space-y-4 rounded-3xl border border-base-100/70 bg-base-100/50 p-5 shadow-inner">
-            <Education />
-            <Experience />
+        <div className="flex flex-row gap-5 items-stretch rounded-3xl border border-base-100/70 bg-base-100/50 p-5 shadow-inner">
+            <div className="flex-1 min-h-[320px]">
+              <Education />
+            </div>
+            <div className="flex-1 min-h-[320px]">
+              <Experience />
+            </div>
         </div>
 
         <div className="relative rounded-3xl border border-base-200/70 bg-base-100/70 p-5 shadow-sm">

@@ -17,6 +17,7 @@ type CarouselCardData = {
   description: string;
   tooltip_names: string[];
   tooltip_urls: string[];
+  text_colour: string;
 };
 
 const projectSlides: CarouselCardData[] = [
@@ -34,6 +35,7 @@ const projectSlides: CarouselCardData[] = [
       "https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original.svg",
       "https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original-wordmark.svg",
     ],
+    text_colour: "text-white",
   },
   {
     id: "item2",
@@ -41,7 +43,7 @@ const projectSlides: CarouselCardData[] = [
     image: graphic_2,
     name: "Full-Stack Task Manager Web App",
     description:
-      "Productivity tool featuring AI task assistance (Llama) and a PocketBase backend to orchestrate user data securely.",
+      "Productivity tool featuring AI task assistant, utilising opensource Llama model, and a PocketBase backend to orchestrate user data securely.",
     tooltip_names: ["React", "TailwindCSS", "Next.js", "PocketBase"],
     tooltip_urls: [
       "https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg",
@@ -49,6 +51,7 @@ const projectSlides: CarouselCardData[] = [
       "https://raw.githubusercontent.com/devicons/devicon/master/icons/nextjs/nextjs-original.svg",
       "https://cdn.simpleicons.org/pocketbase/0",
     ],
+    text_colour: "text-black",
   },
   {
     id: "item3",
@@ -63,6 +66,7 @@ const projectSlides: CarouselCardData[] = [
       "https://raw.githubusercontent.com/devicons/devicon/master/icons/jupyter/jupyter-original.svg",
       "https://raw.githubusercontent.com/devicons/devicon/master/icons/pandas/pandas-original.svg",
     ],
+    text_colour: "text-white",
   },
   {
     id: "item4",
@@ -70,13 +74,14 @@ const projectSlides: CarouselCardData[] = [
     image: graphic_4,
     name: "Portfolio Website",
     description:
-      "Rebuilt and customized a Bootstrap template, now adding interactivity and fresh visuals for this very site.",
-    tooltip_names: ["HTML", "Bootstrap", "JavaScript"],
+      "Having built a first version using a Bootstrap frontend, I upgraded the website to a modern Next.js + React frontend setup.",
+    tooltip_names: ["React", "Tailwind", "Next.js"],
     tooltip_urls: [
-      "https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg",
-      "https://raw.githubusercontent.com/devicons/devicon/master/icons/bootstrap/bootstrap-original.svg",
-      "https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg",
+      "https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg",
+      "https://raw.githubusercontent.com/devicons/devicon/master/icons/tailwindcss/tailwindcss-original.svg",
+      "https://raw.githubusercontent.com/devicons/devicon/master/icons/nextjs/nextjs-original.svg",
     ],
+    text_colour: "text-white",
   },
   {
     id: "item5",
@@ -92,6 +97,7 @@ const projectSlides: CarouselCardData[] = [
       "https://raw.githubusercontent.com/devicons/devicon/master/icons/pytorch/pytorch-original.svg",
       "https://raw.githubusercontent.com/devicons/devicon/master/icons/pandas/pandas-original.svg",
     ],
+    text_colour: "text-white",
   },
 //   {
 //     id: "item6",
@@ -108,9 +114,19 @@ const projectSlides: CarouselCardData[] = [
 ];
 
 const Projects = () => {
+  const carouselRef = useRef<HTMLDivElement | null>(null);
   const [isAutoScroll, setIsAutoScroll] = useState(true);
   const currentIndexRef = useRef(0);
   const intervalRef = useRef<number | null>(null);
+
+  const scrollToIndex = (index: number, behavior: ScrollBehavior = "smooth") => {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+    const items = carousel.querySelectorAll<HTMLElement>("[data-carousel-item]");
+    const item = items[index];
+    if (!item) return;
+    carousel.scrollTo({ left: item.offsetLeft, behavior });
+  };
 
   useEffect(() => {
     if (!isAutoScroll) {
@@ -124,12 +140,7 @@ const Projects = () => {
     intervalRef.current = window.setInterval(() => {
       currentIndexRef.current =
         (currentIndexRef.current + 1) % projectSlides.length;
-      const targetId = projectSlides[currentIndexRef.current].id;
-      document.getElementById(targetId)?.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
-        inline: "start",
-      });
+      scrollToIndex(currentIndexRef.current);
     }, 5000);
 
     return () => {
@@ -146,11 +157,16 @@ const Projects = () => {
     <div className="space-y-4">
         <p className="text-xs uppercase tracking-[0.4em] text-secondary">Projects</p>
       <div
+        ref={carouselRef}
         className="carousel w-full min-h-[420px]"
-        onMouseEnter={stopAutoScroll}
         onFocusCapture={stopAutoScroll}
         onPointerDown={stopAutoScroll}
         onTouchStart={stopAutoScroll}
+        onWheel={(event) => {
+          if (Math.abs(event.deltaX) > Math.abs(event.deltaY) && event.deltaX !== 0) {
+            stopAutoScroll();
+          }
+        }}
       >
         {projectSlides.map((card, i) => (
           <a
@@ -159,8 +175,9 @@ const Projects = () => {
             key={card.id}
             id={card.id}
             className="carousel-item w-full justify-center items-center"
+            data-carousel-item
           >
-            <div className="card bg-base-100 image-full w-3/4 h-full shadow-sm">
+            <div className="card bg-base-100 image-full w-full md:w-3/4 h-full shadow-sm">
               <figure>
                 <Image
                   src={card.image}
@@ -171,10 +188,10 @@ const Projects = () => {
                   priority
                 />
               </figure>
-              <div className="card-body justify-center text-center items-center text-lg gap-3">
+              <div className={`card-body justify-center text-center items-center text-lg gap-3 ${card.text_colour}`}>
                 <h2 className="card-title text-xl">{card.name}</h2>
                 <div className="flex w-full flex-col items-center gap-3">
-                  <p className="max-w-2xl text-center leading-relaxed text-lg">
+                  <p className="max-w-2xl text-center leading-relaxed text-lg invisible md:visible">
                     {card.description}
                   </p>
                   <div className="flex flex-row flex-wrap items-center justify-center gap-1.5 text-sm">
@@ -201,12 +218,7 @@ const Projects = () => {
                       event.preventDefault();
                       event.stopPropagation();
                       if (i === 0) return;
-                      const targetId = projectSlides[i - 1].id;
-                      document.getElementById(targetId)?.scrollIntoView({
-                        behavior: "smooth",
-                        block: "nearest",
-                        inline: "start",
-                      });
+                      scrollToIndex(i - 1);
                     }}
                     aria-label="Previous project"
                   >
@@ -219,12 +231,7 @@ const Projects = () => {
                       event.preventDefault();
                       event.stopPropagation();
                       if (i === projectSlides.length - 1) return;
-                      const targetId = projectSlides[i + 1].id;
-                      document.getElementById(targetId)?.scrollIntoView({
-                        behavior: "smooth",
-                        block: "nearest",
-                        inline: "start",
-                      });
+                      scrollToIndex(i + 1);
                     }}
                     aria-label="Next project"
                   >

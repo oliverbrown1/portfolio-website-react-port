@@ -32,7 +32,7 @@ const educations : educationEntry[] = [
 
 const Education = () => {
   return (
-    <div className="card bg-base-100 w-full h-full shadow-sm p-5">
+    <div className="card bg-base-100 w-full h-full shadow-sm p-1 md:p-5">
         <div className="flex w-full flex-col items-start justify-start gap-6">
             <p className="text-xs uppercase tracking-[0.4em] text-secondary">Education</p>
             {/* Open the modal using document.getElementById('ID').showModal() method */}
@@ -44,17 +44,17 @@ const Education = () => {
                         scale: 1.05,
                         transition: { duration: 0.3 },
                         }}
-                        className="btn btn-ghost w-full rounded-2xl border border-base-200 bg-base-100/70 p-4 text-base font-semibold text-base-content flex flex-col items-start text-left"
+                        className="btn btn-ghost w-full rounded-2xl border border-base-200 bg-base-100/70 p-4 text-base font-semibold text-base-content flex flex-col items-start mb-8 lg:mb-0 text-left"
                         onClick={() => document.getElementById(ed.id).showModal()}
                     >
                         <div className="flex flex-row justify-between w-full">
-                            <span className="text-secondary">
+                            <span className="text-secondary text-sm lg:text-lg">
                               {ed.degree},{" "}
-                              <span className="text-base-content/70 text-sm">
+                              <span className="text-base-content/70 text-sm lg:text-lg">
                                 {ed.school}
                               </span>
                             </span>
-                            <span className="rounded-full border border-secondary/40 px-3 py-1 text-xs font-semibold text-secondary">
+                            <span className="rounded-full border border-secondary/40 px-3 py-1 text-xs lg:text-mdfont-semibold text-secondary">
                             {ed.date_start} - {ed.date_end}
                             </span>
                         </div>

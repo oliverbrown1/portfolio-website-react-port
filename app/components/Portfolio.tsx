@@ -9,7 +9,7 @@ const Portfolio = () => {
   return (
     <section
       id="portfolio"
-      className="space-y-8 rounded-2xl border border-base-200/80 bg-base-200/60 p-6 shadow-md"
+      className="space-y-8 rounded-2xl border border-base-200/80 bg-base-200/60 p-1 md:p-6 shadow-md"
     >
       <div className="flex flex-col items-start gap-3 md:flex-row md:items-center md:justify-between">
         <div className="space-y-1">
@@ -20,11 +20,11 @@ const Portfolio = () => {
       </div>
 
       <div className="flex flex-col gap-6 lg:grid-cols-[1.2fr,0.8fr]">
-        <div className="flex flex-row gap-5 items-stretch rounded-3xl border border-base-100/70 bg-base-100/50 p-5 shadow-inner">
-            <div className="flex-1 min-h-[320px]">
+        <div className="flex flex-col md:flex-row gap-5 items-stretch rounded-3xl border border-base-100/70 bg-base-100/50 p-1 md:p-5 shadow-inner ">
+            <div className="flex-1 min-h-40 md:min-h-80">
               <Education />
             </div>
-            <div className="flex-1 min-h-[320px]">
+            <div className="flex-1 min-h-40 md:min-h-80">
               <Experience />
             </div>
         </div>

@@ -53,7 +53,12 @@ const Experience = () => {
                         transition: { duration: 0.3 },
                         }}
                         className="btn btn-ghost w-full rounded-2xl border border-base-200 bg-base-100/70 p-4 text-base font-semibold text-base-content flex flex-col items-start mb-8 lg:mb-0 text-left"
-                        onClick={() => document.getElementById(exp.id).showModal()}
+                        onClick={() => {
+                          const dialog = document.getElementById(
+                            exp.id
+                          ) as HTMLDialogElement | null;
+                          dialog?.showModal();
+                        }}
                     >   
                         <div className="flex flex-row justify-between w-full">
                             <span className="text-secondary text-sm lg:text-lg">

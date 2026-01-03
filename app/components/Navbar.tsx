@@ -4,7 +4,7 @@ import { motion } from "motion/react"
 import { button } from "motion/react-client";
 
 type NavbarProps = {
-  buttonOnClick?: () => void;
+  buttonOnClick: () => void;
 };
 
 const Navbar = ({ buttonOnClick }: NavbarProps) => {

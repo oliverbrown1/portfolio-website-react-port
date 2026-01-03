@@ -1,8 +1,12 @@
-import React from 'react'
+import React from "react";
 import Image from "next/image";
 import SampleGraphic from "../../assets/mern.png";
 
-const CarouselCard = ({card_id}) => {
+type CarouselCardProps = {
+  card_id: string;
+};
+
+const CarouselCard = ({ card_id }: CarouselCardProps) => {
   return (
     <div id={card_id} className="carousel-item w-full justify-center items-center">
             <div className="card bg-base-100 image-full w-3/4 h-full shadow-sm">
@@ -51,7 +55,7 @@ const CarouselCard = ({card_id}) => {
             </div>
             </div>
     </div>
-  )
-}
+  );
+};
 
-export default CarouselCard
+export default CarouselCard;

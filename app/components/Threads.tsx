@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
-import { Renderer, Program, Mesh, Triangle, Color } from 'ogl';
+import React, { useEffect, useRef } from "react";
+import { Renderer, Program, Mesh, Triangle, Color } from "ogl";
 
 const vertexShader = `
 attribute vec2 position;
@@ -118,6 +118,13 @@ void main() {
 }
 `;
 
+type ThreadsProps = React.HTMLAttributes<HTMLDivElement> & {
+  color?: string | [number, number, number];
+  amplitude?: number;
+  distance?: number;
+  enableMouseInteraction?: boolean;
+};
+
 const Threads = ({
   color,
   amplitude = 1,
@@ -125,15 +132,15 @@ const Threads = ({
   enableMouseInteraction = true,
   className = "",
   ...rest
-}) => {
-  const containerRef = useRef(null);
-  const animationFrameId = useRef();
+}: ThreadsProps) => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const animationFrameId = useRef<number | null>(null);
 
   useEffect(() => {
     if (!containerRef.current) return;
     const container = containerRef.current;
 
-    const normalizeRgb = (value) => {
+    const normalizeRgb = (value: number[]) => {
       if (!Array.isArray(value) || value.length !== 3) return [1, 1, 1];
       const max = Math.max(...value);
       if (max > 1) {
@@ -142,7 +149,7 @@ const Threads = ({
       return value;
     };
 
-    const parseColor = (value) => {
+    const parseColor = (value?: string | number[]) => {
       if (Array.isArray(value)) return normalizeRgb(value);
       if (typeof value !== "string") return [1, 1, 1];
       const trimmed = value.trim();
@@ -159,7 +166,9 @@ const Threads = ({
       }
       const rgbMatch = trimmed.match(/rgba?\(([^)]+)\)/i);
       if (rgbMatch) {
-        const parts = rgbMatch[1].split(",").map((part) => parseFloat(part.trim()));
+        const parts = rgbMatch[1]
+          .split(",")
+          .map((part) => parseFloat(part.trim()));
         return [parts[0] / 255, parts[1] / 255, parts[2] / 255];
       }
       return [1, 1, 1];
@@ -203,13 +212,13 @@ const Threads = ({
       program.uniforms.iResolution.value.g = clientHeight;
       program.uniforms.iResolution.value.b = clientWidth / clientHeight;
     }
-    window.addEventListener('resize', resize);
+    window.addEventListener("resize", resize);
     resize();
 
-    let currentMouse = [0.5, 0.5];
-    let targetMouse = [0.5, 0.5];
+    let currentMouse: [number, number] = [0.5, 0.5];
+    let targetMouse: [number, number] = [0.5, 0.5];
 
-    function handleMouseMove(e) {
+    function handleMouseMove(e: MouseEvent) {
       const rect = container.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width;
       const y = 1.0 - (e.clientY - rect.top) / rect.height;
@@ -219,11 +228,11 @@ const Threads = ({
       targetMouse = [0.5, 0.5];
     }
     if (enableMouseInteraction) {
-      window.addEventListener('mousemove', handleMouseMove);
-      window.addEventListener('mouseleave', handleMouseLeave);
+      window.addEventListener("mousemove", handleMouseMove);
+      window.addEventListener("mouseleave", handleMouseLeave);
     }
 
-    function update(t) {
+    function update(t: number) {
       if (enableMouseInteraction) {
         const smoothing = 0.05;
         currentMouse[0] += smoothing * (targetMouse[0] - currentMouse[0]);
@@ -243,11 +252,11 @@ const Threads = ({
 
     return () => {
       if (animationFrameId.current) cancelAnimationFrame(animationFrameId.current);
-      window.removeEventListener('resize', resize);
+      window.removeEventListener("resize", resize);
 
       if (enableMouseInteraction) {
-        window.removeEventListener('mousemove', handleMouseMove);
-        window.removeEventListener('mouseleave', handleMouseLeave);
+        window.removeEventListener("mousemove", handleMouseMove);
+        window.removeEventListener("mouseleave", handleMouseLeave);
       }
       if (container.contains(gl.canvas)) container.removeChild(gl.canvas);
       gl.getExtension('WEBGL_lose_context')?.loseContext();

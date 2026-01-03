@@ -13,7 +13,7 @@ const Portfolio = () => {
     >
       <div className="flex flex-col items-start gap-3 md:flex-row md:items-center md:justify-between">
         <div className="space-y-1">
-          <p className="text-xs uppercase tracking-[0.4em] text-secondary">
+          <p className="text-xs uppercase tracking-[0.4em] text-secondary p-3">
             Portfolio
           </p>
         </div>

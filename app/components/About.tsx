@@ -10,7 +10,7 @@ const About = ({ aboutMePressed, toggleAboutMe }: AboutProps) => {
 
   return (
     <section className="space-y-6" id="about">
-      <div className="rounded-2xl border border-base-200/80 bg-base-200/60 p-1 md:p-6 shadow-md">
+      <div className="rounded-2xl border border-base-200/80 bg-base-200/60 p-2 mb-5 md:p-6 md:mb-0 shadow-md">
 
         <div className="mt-4 overflow-hidden rounded-2xl border border-base-300 bg-base-100/70">
           <button
